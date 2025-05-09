@@ -30,8 +30,20 @@ def login():
     if username != "test" or password != "test":
         return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
 
-    access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token)
+    access_token = create_access_token(identity={"username": username, "role": "admin"})
+    refresh_token = create_refresh_token(identity={"username": username, "role": "admin"})
+    return jsonify(
+        access_token=access_token,
+        refresh_token=refresh_token
+    )
+
+@app.route("/admin", methods=["GET"])
+@jwt_required()
+def admin_only():
+    identity = get_jwt_identity()
+    if identity["role"] != "admin":
+        return jsonify({"msg": "Accès refusé : rôle admin requis"}), 403
+    return jsonify({"msg": f"Bienvenue {identity['username']}, vous êtes administrateur."})
 
 
 # Route protégée par un jeton valide
