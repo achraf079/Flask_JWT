@@ -30,14 +30,16 @@ def hello_world():
 def login():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
-    if username != "test" or password != "test":
+    if username == "admin_user" and password == "admin_pass":
+        role = "admin"
+    elif username == "regular_user" and password == "user_pass":
+        role = "user"
+    else
         return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
 
     access_token = create_access_token(identity={"username": username, "role": "admin"})
-    refresh_token = create_refresh_token(identity={"username": username, "role": "admin"})
     return jsonify(
         access_token=access_token,
-        refresh_token=refresh_token
     )
 
 @app.route("/admin", methods=["GET"])
