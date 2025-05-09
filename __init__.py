@@ -42,7 +42,7 @@ def login():
 
 @app.route("/admin", methods=["GET"])
 @jwt_required()
-def admin_only():
+def admin():
     identity = get_jwt_identity()
     if identity["role"] != "admin":
         return jsonify({"msg": "Accès refusé : rôle admin requis"}), 403
