@@ -37,9 +37,10 @@ def login():
     else
         return jsonify({"msg": "Mauvais utilisateur ou mot de passe"}), 401
 
-    access_token = create_access_token(identity={"username": username, "role": "admin"})
+    access_token = create_access_token(identity={"username": username, "role": role})
+    
     return jsonify(
-        access_token=access_token,
+        access_token=access_token
     )
 
 @app.route("/admin", methods=["GET"])
