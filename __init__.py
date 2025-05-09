@@ -9,6 +9,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from flask_jwt_extended import create_access_token, create_refresh_token
                                                                                                                                        
 app = Flask(__name__)                                                                                                                  
                                                                                                                                        
@@ -23,6 +24,8 @@ def hello_world():
 
 # Création d'une route qui vérifie l'utilisateur et retour un Jeton JWT si ok..
 # La fonction create_access_token() est utilisée pour générer un jeton JWT..
+
+
 @app.route("/login", methods=["POST"])
 def login():
     username = request.json.get("username", None)
